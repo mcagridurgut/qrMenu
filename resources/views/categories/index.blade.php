@@ -1,11 +1,16 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoreis</title>
-</head>
-<body>
-    categories controller
-</body>
-</html>
+@extends('master')
+@section('content')
+    <div class="container align-middle categoryGrid">
+        <div class="row justify-content-center">
+            @if( (count($data)+2)%3 != 0)
+                @foreach($data as $item)
+                    <a href="/categories/{{$item->slug}}"  class="col-sm-3 categoryCard btn">{{$item->name}}</a>
+                @endforeach
+            @else
+                @foreach($data as $item)
+                    <a href="/categories/{{$item->slug}}"  class="col-sm-5 categoryCard btn">{{$item->name}}</a>
+                @endforeach
+            @endif
+            </div>
+    </div>
+@endsection('content')

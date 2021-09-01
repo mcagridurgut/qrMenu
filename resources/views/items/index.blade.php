@@ -4,11 +4,11 @@
         <div class="row justify-content-center">
             @if( (count($data)+2)%3 != 0)
                 @foreach($data as $item)
-                    <a href="/categories/{{$item}}"  class="col-sm-3 categoryCard btn">{{$item}}</a>
+                    <a class="col-sm-3 categoryCard btn">{{$item->name}}</a>
                 @endforeach
             @else
                 @foreach($data as $item)
-                    <a href="/categories/{{$item}}"  class="col-sm-5 categoryCard btn">{{$item}}</a>
+                    <a class="col-sm-5 categoryCard btn">{{$item->name}}</a>
                 @endforeach
             @endif
             </div>

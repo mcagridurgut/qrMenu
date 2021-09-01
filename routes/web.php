@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoriesController;
-
+use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +13,16 @@ use App\Http\Controllers\CategoriesController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/categories');
-});
+// Route::get('/home', function () {
+//     $data = ['ana yemekler','tatlilar','salatalar','icecekler'];
+//     return view('home')->with('data',$data);
+// });
 
-Route::get('/home', function () {
-    $data = ['ana yemekler','tatlilar','salatalar','icecekler'];
-    return view('home')->with('data',$data);
+Route::get('/categories/{category:slug?}', function (Category $category) {
+    if(!$category->exists)
+        return view('categories.index')->with('data',Category::where('parent_id',null)->get());
+    if($category->has_item){
+        return view('items.index')->with('data',Category::with('items')->where('id',$category->id)->get()[0]->items);
+    }
+    return view('categories.index')->with('data',Category::with('children')->where('id',$category->id)->get()[0]->children);
 });
-
-Route::get('/categories',[CategoriesController::class, 'index']);
-Route::get('/categories/{excerpt}',[CategoriesController::class, 'show']);

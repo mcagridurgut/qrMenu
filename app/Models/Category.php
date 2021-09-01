@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -10,17 +11,17 @@ class Category extends Model
     use HasFactory;
     public function parent()
     {
-        return $this->belongsTo('Category', 'parent_id');
+        return $this->belongsTo(self::class, 'id');
     }
 
     public function items()
     {
-        return $this->hasMany('Item', 'parent_id');
+        return $this->hasMany('App\Models\Item', 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany('Category', 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     // recursive, loads all descendants
